@@ -124,11 +124,28 @@ pdfauthor = {Team report}
 \subsection*{2) TMI on Social Media (EASY)}
 \textbf{Assigned to:} Alex
 
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Navigate to \texttt{/profile.html} and collect all public data:
+  hometown (Riverside), first cat (Pip), graduation year (2016),
+  favourite punctuation (\texttt{?}).
+  \item Reconstruct password from the pinned post formula:
+  \texttt{RiversidePip2016?}
+  \item Inspect the login page source and find credentials fetched
+  from \texttt{/api/login-data} before authentication occurs.
+  \item Open \texttt{/api/login-data} directly in the browser or
+  intercept it via the Network tab in DevTools to retrieve the
+  flag, username, and password in plaintext JSON.
+\end{enumerate}
+
+\textbf{Flag:} MaaSec{4cb0afdc29a23850\_flag}
+
+\textbf{Notes}
 \begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
+  \item Two vulnerabilities chained: OSINT-reconstructable password
+  and sensitive data exposure (OWASP A02) via a public API endpoint.
+  \item Authentication logic must never run client-side with
+  credentials fetched from an unauthenticated endpoint.
 \end{itemize}
 
 \subsection*{3) One Time Password Reuse (MEDIUM)}
