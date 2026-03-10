@@ -7,10 +7,9 @@
 %\usepackage{gentium}
 \usepackage{mathptmx} % Use Times Font
 
-
-\usepackage[pdftex]{graphicx} % Required for including pictures
+\usepackage{graphicx} % Required for including pictures
 \usepackage[swedish]{babel} % Swedish translations
-\usepackage[pdftex,linkcolor=black,pdfborder={0 0 0}]{hyperref} % Format links for pdf
+\usepackage[linkcolor=black,pdfborder={0 0 0}]{hyperref} % Format links for pdf
 \usepackage{calc} % To reset the counter in the document after title page
 \usepackage{enumitem} % Includes lists
 
@@ -20,30 +19,156 @@
 %\usepackage{parskip}
 
 \usepackage[all]{nowidow} % Tries to remove widows
-\usepackage[protrusion=true,expansion=true]{microtype} % Improves typography, load after fontpackage is selected
-
-\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
-
+\usepackage[protrusion=true,expansion=false]{microtype} % Improves typography, load after fontpackage is selected
 
 %-----------------------
 % Set pdf information and add title, fill in the fields
 %-----------------------
-\hypersetup{ 	
-pdfsubject = {},
-pdftitle = {},
-pdfauthor = {}
+\hypersetup{
+pdfsubject = {Computer Security (BCS2420) Allsafe report},
+pdftitle = {Allsafe CTF Report - Raman Yousefi},
+pdfauthor = {Raman Yousefi}
 }
 
 %-----------------------
 % Begin document
 %-----------------------
-\begin{document} %All text i dokumentet hamnar mellan dessa taggar, allt ovanför är formatering av dokumentet
+\begin{document}
 
 \section{Introduction}
+This report documents my completed challenges for the Allsafe project in BCS2420 (Computer Security).
+The project runs as a 5-week CTF with challenges from easy to hard difficulty.
+I followed the software track and solved the challenges assigned to me in our team distribution.
 
-\lipsum[1-3]
+\section{Project context and team distribution}
+The software track is organized per week with topics from cryptography, web security, and network forensics.
+Our team split work across Raman, Filippo, and Alex.
 
+\subsection*{Week 1}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Multi-step Transformations (EASY) --- Raman --- Done
+  \item Modified Vigen\`ere Cipher (EASY) --- Raman --- Done
+  \item One-Time Pad Misuse (MEDIUM) --- Filippo --- Todo
+  \item The Penguin (MEDIUM) --- Filippo --- Todo
+  \item The Generator of Keys (HARD) --- Raman --- Done
+\end{itemize}
 
-\subsection*{Subtitle}
-\lipsum[4-5]
+\subsection*{Week 2}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Insecure Login (EASY) --- Raman --- Done
+  \item TMI on Social Media (EASY) --- Alex
+  \item One Time Password Reuse (MEDIUM) --- Alex
+  \item MD5 Hash Vulnerability (MEDIUM) --- Filippo
+  \item Cracking With John (HARD) --- Alex
+\end{itemize}
+
+\subsection*{Week 3}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Last Signal (EASY) --- Filippo
+  \item Last Broadcast (EASY) --- Filippo
+  \item The Living Kernel (MEDIUM) --- Alex
+  \item Encrypted Whisper (MEDIUM) --- Raman --- Done
+  \item Challenge 5 (HARD) --- Filippo
+\end{itemize}
+
+\subsection*{Week 4}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Subscribe to Read More (EASY) --- Raman --- Done
+  \item The Internet Never Forgets (EASY) --- Alex
+  \item Feed The Machine (MEDIUM) --- Filippo
+  \item No Injector Will Pass! (MEDIUM) --- Filippo
+  \item Equalizer Weapon (HARD) --- Alex
+\end{itemize}
+
+\subsection*{Week 5}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Firewall Illusion (EASY) --- Alex
+  \item Encrypted Deception (EASY) --- Raman --- Done
+  \item Silent Exfiltration (MEDIUM) --- Raman --- Done
+  \item Configuration Drift (MEDIUM) --- Filippo
+  \item ARP Storm (HARD) --- Raman --- Done
+\end{itemize}
+
+\section{Raman completed challenges}
+
+\subsection*{Week 1 --- Multi-step Transformations (EASY)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Decoded each line independently: ROT13, Caesar shift, Base64, Atbash, and binary XOR.
+  \item Reconstructed the final string by combining all parts and resolving overlap.
+  \item Flag: \texttt{FLAG\{3NCRYPT1ON\_4ND\_3NC0DING\_ARE\_FUN\}}
+\end{itemize}
+
+\subsection*{Week 1 --- Modified Vigen\`ere Cipher (EASY)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Used known plaintext \texttt{FLAG\{} against \texttt{HDAY\{} to recover key letters.
+  \item Derived key \texttt{CRYP} and decrypted with drift cycle \texttt{i \% 4}.
+  \item Flag: \texttt{FLAG\{MODIFIED\_VIGENERE\_IS\_BREAKABLE\}}
+\end{itemize}
+
+\subsection*{Week 1 --- The Generator of Keys (HARD)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Reversed the binary with \texttt{strings} and \texttt{radare2} to recover input constraints.
+  \item Solved constraints (length/charset/hash/checksum) to generate a valid key.
+  \item Flag: \texttt{FLAG\{EBCCAAAB\}}
+\end{itemize}
+
+\subsection*{Week 2 --- Insecure Login (EASY)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Inspected front-end JavaScript and found hardcoded credentials.
+  \item Logged in with exposed credentials from \texttt{login.js}.
+  \item Flag: \texttt{MaaSec\{24759cdd3e34e66b\_flag\}}
+\end{itemize}
+
+\subsection*{Week 3 --- Encrypted Whisper (MEDIUM)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Enumerated cache files and identified Base64 text starting with \texttt{H4sI}.
+  \item Decoded Base64 and decompressed gzip to recover plaintext message.
+  \item Flag: \texttt{FLAG\{WHISPER079-eryz-5180-DhG0Vn4jzE\}}
+\end{itemize}
+
+\subsection*{Week 4 --- Subscribe to Read More (EASY)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Used browser DevTools to find hidden content endpoint \texttt{/api/fetch}.
+  \item Accessed endpoint directly and bypassed UI paywall.
+  \item Flag: \texttt{FLAG\{L0NG\_L1V3\_W0RK1N6\_CL4SS\}}
+\end{itemize}
+
+\subsection*{Week 5 --- Encrypted Deception (EASY)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Inspected all port 443 flows and found one abnormal stream with tiny packets.
+  \item Followed that stream and read plaintext hidden inside fake TLS traffic.
+  \item Flag: \texttt{Flag\{054bf724085f36a4\_flag\}}
+\end{itemize}
+
+\subsection*{Week 5 --- Silent Exfiltration (MEDIUM)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Parsed HTTP timeline and extracted flag fragments from headers, URL params, and JSON.
+  \item Reassembled all parts in chronological order.
+  \item Flag: \texttt{Flag\{fc078463666cd003\_flag\}}
+\end{itemize}
+
+\subsection*{Week 5 --- ARP Storm (HARD)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item Detected malformed ARP opcodes carrying covert bytes.
+  \item Reconstructed hex stream, converted to ASCII, then Base64-decoded final payload.
+  \item Flag: \texttt{Flag\{4c17ef80d05827bd\_flag\}}
+\end{itemize}
+
+\section{Conclusion}
+The solved challenges covered practical weaknesses across cryptography, web applications, and network traffic analysis.
+A repeated pattern across tasks was that small implementation mistakes (hardcoded secrets, weak mode selection, unsafe protocol assumptions) caused full compromise.
+
+\subsection*{Related markdown writeups (source material)}
+\begin{itemize}[leftmargin=*,nosep]
+  \item \texttt{ctf-writeup\_multi\_step.md}
+  \item \texttt{ctf-writeup\_vigenere.md}
+  \item \texttt{ctf-writeup\_the\_generator.md}
+  \item \texttt{ctf-writeup\_insecure\_login.md}
+  \item \texttt{ctf-writeup\_encrypted\_whisper.md}
+  \item \texttt{ctf-writeup\_subscribe\_to\_read\_more.md}
+  \item \texttt{ctf-writeup\_encrypted\_deception.md}
+  \item \texttt{ctf-writeup\_silent\_exfiltration.md}
+  \item \texttt{ctf-writeup\_arp\_storm.md}
+\end{itemize}
+
 \end{document}
