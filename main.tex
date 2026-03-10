@@ -19,15 +19,15 @@
 %\usepackage{parskip}
 
 \usepackage[all]{nowidow} % Tries to remove widows
-\usepackage[protrusion=true,expansion=false]{microtype} % Improves typography, load after fontpackage is selected
+\usepackage[protrusion=true,expansion=false]{microtype} % XeLaTeX-safe settings
 
 %-----------------------
 % Set pdf information and add title, fill in the fields
 %-----------------------
 \hypersetup{
 pdfsubject = {Computer Security (BCS2420) Allsafe report},
-pdftitle = {Allsafe CTF Report - Raman Yousefi},
-pdfauthor = {Raman Yousefi}
+pdftitle = {Allsafe CTF Report},
+pdfauthor = {Team report}
 }
 
 %-----------------------
@@ -36,139 +36,296 @@ pdfauthor = {Raman Yousefi}
 \begin{document}
 
 \section{Introduction}
-This report documents my completed challenges for the Allsafe project in BCS2420 (Computer Security).
-The project runs as a 5-week CTF with challenges from easy to hard difficulty.
-I followed the software track and solved the challenges assigned to me in our team distribution.
+This report is structured by challenge.
+Raman's solved challenges are filled in with steps and flags.
+Challenges assigned to other teammates are left as blank templates so they can add their own work.
 
-\section{Project context and team distribution}
-The software track is organized per week with topics from cryptography, web security, and network forensics.
-Our team split work across Raman, Filippo, and Alex.
+\section{Week 1}
 
-\subsection*{Week 1}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Multi-step Transformations (EASY) --- Raman --- Done
-  \item Modified Vigen\`ere Cipher (EASY) --- Raman --- Done
-  \item One-Time Pad Misuse (MEDIUM) --- Filippo --- Todo
-  \item The Penguin (MEDIUM) --- Filippo --- Todo
-  \item The Generator of Keys (HARD) --- Raman --- Done
+\subsection*{1) Multi-step Transformations (EASY, 5 points)}
+\textbf{Assigned to:} Raman
+
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Decode \texttt{SYNT\{} with ROT13 to get \texttt{FLAG\{}.
+  \item Apply Caesar shift 7 left on \texttt{3UJYFWA1VU\_4UK\_3UJ0K} to get \texttt{3NCRYPT1ON\_4ND\_3NC0D}.
+  \item Base64-decode \texttt{M05DMERJTg==} to get \texttt{3NC0DIN}.
+  \item Apply Atbash on \texttt{T\_ZIV\_} to get \texttt{G\_ARE\_}.
+  \item XOR binary bytes to get \texttt{FUN\}}.
+  \item Merge parts in order and resolve overlap (\texttt{3NC0D} + \texttt{3NC0DIN} $\rightarrow$ \texttt{3NC0DING}).
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{3NCRYPT1ON\_4ND\_3NC0DING\_ARE\_FUN\}}
+
+\subsection*{2) Modified Vigen\`ere Cipher (EASY, 5 points)}
+\textbf{Assigned to:} Raman
+
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Use known CTF prefix \texttt{FLAG\{} against ciphertext prefix \texttt{HDAY\{}.
+  \item Recover key with drift-aware equation: \texttt{k = (c - p - drift) mod 26}.
+  \item From first four letters, get key \texttt{CRYP}.
+  \item Decrypt full text with \texttt{p = (c - k - drift) mod 26}, drift cycle \texttt{i \% 4}.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{MODIFIED\_VIGENERE\_IS\_BREAKABLE\}}
+
+\subsection*{3) One-Time Pad Misuse (MEDIUM)}
+\textbf{Assigned to:} Filippo
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 2}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Insecure Login (EASY) --- Raman --- Done
-  \item TMI on Social Media (EASY) --- Alex
-  \item One Time Password Reuse (MEDIUM) --- Alex
-  \item MD5 Hash Vulnerability (MEDIUM) --- Filippo
-  \item Cracking With John (HARD) --- Alex
+\subsection*{4) The Penguin (MEDIUM)}
+\textbf{Assigned to:} Filippo
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 3}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Last Signal (EASY) --- Filippo
-  \item Last Broadcast (EASY) --- Filippo
-  \item The Living Kernel (MEDIUM) --- Alex
-  \item Encrypted Whisper (MEDIUM) --- Raman --- Done
-  \item Challenge 5 (HARD) --- Filippo
+\subsection*{5) The Generator of Keys (HARD)}
+\textbf{Assigned to:} Raman
+
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Run \texttt{file lock} and \texttt{strings lock} to extract quick hints.
+  \item Reverse \texttt{validate\_key} in \texttt{radare2}.
+  \item Recover constraints: length 8, uppercase letters, hash target \texttt{0x1234}, checksum target \texttt{0x940}.
+  \item Solve constraints with a small Python brute-force/pruning script.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{EBCCAAAB\}}
+
+\section{Week 2}
+
+\subsection*{1) Insecure Login (EASY, 5 points)}
+\textbf{Assigned to:} Raman
+
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Inspect page source and linked JS file \texttt{login.js}.
+  \item Find hardcoded credentials in front-end code.
+  \item Log in with exposed credentials and retrieve flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{MaaSec\{24759cdd3e34e66b\_flag\}}
+
+\subsection*{2) TMI on Social Media (EASY)}
+\textbf{Assigned to:} Alex
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 4}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Subscribe to Read More (EASY) --- Raman --- Done
-  \item The Internet Never Forgets (EASY) --- Alex
-  \item Feed The Machine (MEDIUM) --- Filippo
-  \item No Injector Will Pass! (MEDIUM) --- Filippo
-  \item Equalizer Weapon (HARD) --- Alex
+\subsection*{3) One Time Password Reuse (MEDIUM)}
+\textbf{Assigned to:} Alex
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 5}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Firewall Illusion (EASY) --- Alex
-  \item Encrypted Deception (EASY) --- Raman --- Done
-  \item Silent Exfiltration (MEDIUM) --- Raman --- Done
-  \item Configuration Drift (MEDIUM) --- Filippo
-  \item ARP Storm (HARD) --- Raman --- Done
+\subsection*{4) MD5 Hash Vulnerability (MEDIUM)}
+\textbf{Assigned to:} Filippo
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\section{Raman completed challenges}
+\subsection*{5) Cracking With John (HARD)}
+\textbf{Assigned to:} Alex
 
-\subsection*{Week 1 --- Multi-step Transformations (EASY)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Decoded each line independently: ROT13, Caesar shift, Base64, Atbash, and binary XOR.
-  \item Reconstructed the final string by combining all parts and resolving overlap.
-  \item Flag: \texttt{FLAG\{3NCRYPT1ON\_4ND\_3NC0DING\_ARE\_FUN\}}
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 1 --- Modified Vigen\`ere Cipher (EASY)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Used known plaintext \texttt{FLAG\{} against \texttt{HDAY\{} to recover key letters.
-  \item Derived key \texttt{CRYP} and decrypted with drift cycle \texttt{i \% 4}.
-  \item Flag: \texttt{FLAG\{MODIFIED\_VIGENERE\_IS\_BREAKABLE\}}
+\section{Week 3}
+
+\subsection*{1) Last Signal (EASY)}
+\textbf{Assigned to:} Filippo
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 1 --- The Generator of Keys (HARD)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Reversed the binary with \texttt{strings} and \texttt{radare2} to recover input constraints.
-  \item Solved constraints (length/charset/hash/checksum) to generate a valid key.
-  \item Flag: \texttt{FLAG\{EBCCAAAB\}}
+\subsection*{2) Last Broadcast (EASY)}
+\textbf{Assigned to:} Filippo
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 2 --- Insecure Login (EASY)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Inspected front-end JavaScript and found hardcoded credentials.
-  \item Logged in with exposed credentials from \texttt{login.js}.
-  \item Flag: \texttt{MaaSec\{24759cdd3e34e66b\_flag\}}
+\subsection*{3) The Living Kernel (MEDIUM)}
+\textbf{Assigned to:} Alex
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 3 --- Encrypted Whisper (MEDIUM)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Enumerated cache files and identified Base64 text starting with \texttt{H4sI}.
-  \item Decoded Base64 and decompressed gzip to recover plaintext message.
-  \item Flag: \texttt{FLAG\{WHISPER079-eryz-5180-DhG0Vn4jzE\}}
+\subsection*{4) Encrypted Whisper (MEDIUM)}
+\textbf{Assigned to:} Raman
+
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Inspect cache files in \texttt{/srv/terminal/.cache}.
+  \item Read \texttt{.whisper} and detect Base64+gzip pattern (starts with \texttt{H4sI}).
+  \item Decode with \texttt{base64 -d} and decompress with \texttt{gunzip -c}.
+  \item Read plaintext output and capture flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{WHISPER079-eryz-5180-DhG0Vn4jzE\}}
+
+\subsection*{5) Challenge 5 (HARD)}
+\textbf{Assigned to:} Filippo
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 4 --- Subscribe to Read More (EASY)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Used browser DevTools to find hidden content endpoint \texttt{/api/fetch}.
-  \item Accessed endpoint directly and bypassed UI paywall.
-  \item Flag: \texttt{FLAG\{L0NG\_L1V3\_W0RK1N6\_CL4SS\}}
+\section{Week 4}
+
+\subsection*{1) Subscribe to Read More (EASY, 5 points)}
+\textbf{Assigned to:} Raman
+
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Inspect page and JS requests in browser DevTools.
+  \item Find direct endpoint \texttt{/api/fetch} serving full article data.
+  \item Open endpoint directly and extract flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{L0NG\_L1V3\_W0RK1N6\_CL4SS\}}
+
+\subsection*{2) The Internet Never Forgets (EASY)}
+\textbf{Assigned to:} Alex
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 5 --- Encrypted Deception (EASY)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Inspected all port 443 flows and found one abnormal stream with tiny packets.
-  \item Followed that stream and read plaintext hidden inside fake TLS traffic.
-  \item Flag: \texttt{Flag\{054bf724085f36a4\_flag\}}
+\subsection*{3) Feed The Machine (MEDIUM)}
+\textbf{Assigned to:} Filippo
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 5 --- Silent Exfiltration (MEDIUM)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Parsed HTTP timeline and extracted flag fragments from headers, URL params, and JSON.
-  \item Reassembled all parts in chronological order.
-  \item Flag: \texttt{Flag\{fc078463666cd003\_flag\}}
+\subsection*{4) No Injector Will Pass! (MEDIUM)}
+\textbf{Assigned to:} Filippo
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
 
-\subsection*{Week 5 --- ARP Storm (HARD)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item Detected malformed ARP opcodes carrying covert bytes.
-  \item Reconstructed hex stream, converted to ASCII, then Base64-decoded final payload.
-  \item Flag: \texttt{Flag\{4c17ef80d05827bd\_flag\}}
+\subsection*{5) Equalizer Weapon (HARD)}
+\textbf{Assigned to:} Alex
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
 \end{itemize}
+
+\section{Week 5}
+
+\subsection*{1) Firewall Illusion (EASY)}
+\textbf{Assigned to:} Alex
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
+\end{itemize}
+
+\subsection*{2) Encrypted Deception (EASY, 10 points)}
+\textbf{Assigned to:} Raman
+
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Review all port 443 flows in the PCAP.
+  \item Identify outlier stream with very small packet lengths.
+  \item Follow suspicious stream with ASCII output and read plaintext flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{Flag\{054bf724085f36a4\_flag\}}
+
+\subsection*{3) Silent Exfiltration (MEDIUM, 10 points)}
+\textbf{Assigned to:} Raman
+
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Inspect HTTP payload timeline from PCAP using \texttt{tcpdump -A}.
+  \item Extract split fragments from headers, query parameters, and JSON body.
+  \item Reassemble parts in chronological order.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{Flag\{fc078463666cd003\_flag\}}
+
+\subsection*{4) Configuration Drift (MEDIUM)}
+\textbf{Assigned to:} Filippo
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Challenge overview:
+  \item Steps / commands:
+  \item Flag:
+  \item Notes:
+\end{itemize}
+
+\subsection*{5) ARP Storm (HARD, 20 points)}
+\textbf{Assigned to:} Raman
+
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Inspect ARP packets and detect malformed \texttt{Unknown} opcode entries.
+  \item Extract opcode bytes in order, convert hex to ASCII stream.
+  \item Decode resulting Base64 text to recover final flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{Flag\{4c17ef80d05827bd\_flag\}}
 
 \section{Conclusion}
-The solved challenges covered practical weaknesses across cryptography, web applications, and network traffic analysis.
-A repeated pattern across tasks was that small implementation mistakes (hardcoded secrets, weak mode selection, unsafe protocol assumptions) caused full compromise.
-
-\subsection*{Related markdown writeups (source material)}
-\begin{itemize}[leftmargin=*,nosep]
-  \item \texttt{ctf-writeup\_multi\_step.md}
-  \item \texttt{ctf-writeup\_vigenere.md}
-  \item \texttt{ctf-writeup\_the\_generator.md}
-  \item \texttt{ctf-writeup\_insecure\_login.md}
-  \item \texttt{ctf-writeup\_encrypted\_whisper.md}
-  \item \texttt{ctf-writeup\_subscribe\_to\_read\_more.md}
-  \item \texttt{ctf-writeup\_encrypted\_deception.md}
-  \item \texttt{ctf-writeup\_silent\_exfiltration.md}
-  \item \texttt{ctf-writeup\_arp\_storm.md}
-\end{itemize}
+This document now follows a challenge-by-challenge structure.
+Raman's solved parts are complete, while other teammate sections are left blank for direct completion.
 
 \end{document}
