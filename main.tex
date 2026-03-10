@@ -14,7 +14,7 @@
 \usepackage{enumitem} % Includes lists
 
 \frenchspacing % No double spacing between sentences
-\linespread{1.2} % Set linespace
+\linespread{1.1} % Set linespace
 \usepackage[a4paper, lmargin=0.1666\paperwidth, rmargin=0.1666\paperwidth, tmargin=0.1111\paperheight, bmargin=0.1111\paperheight]{geometry} %margins
 %\usepackage{parskip}
 
@@ -73,22 +73,27 @@ Challenges assigned to other teammates are left as blank templates so they can a
 \subsection*{3) One-Time Pad Misuse (MEDIUM)}
 \textbf{Assigned to:} Filippo
 
-\begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
-\end{itemize}
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Use the known plaintext and first ciphertext to recover the OTP key with \texttt{K = C1 XOR P1}.
+  \item Decrypt the second ciphertext with \texttt{P2 = C2 XOR K}.
+  \item Convert the result to text and read the flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{DO\_N0T\_R3U5E\_07P\}}
 
 \subsection*{4) The Penguin (MEDIUM)}
 \textbf{Assigned to:} Filippo
 
-\begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
-\end{itemize}
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Decode \texttt{flag.dat} from Base64 and identify the result as a BMP image.
+  \item Observe that ECB mode leaks visible structure in the image.
+  \item Enhance or inspect the image and read the flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{ECB\_PENG1IN\_L1V35\}}
+
 
 \subsection*{5) The Generator of Keys (HARD)}
 \textbf{Assigned to:} Raman
@@ -140,12 +145,15 @@ Challenges assigned to other teammates are left as blank templates so they can a
 \subsection*{4) MD5 Hash Vulnerability (MEDIUM)}
 \textbf{Assigned to:} Filippo
 
-\begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
-\end{itemize}
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Connect to the service and note that it checks only the first 7 hex characters of an MD5 hash.
+  \item Brute-force values of the form \texttt{trusted\_data:<n>} until the hash prefix matches.
+  \item Submit the matching input and capture the flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{MaaSec\{7b56a5bb087ec97d\_flag\}}
+
 
 \subsection*{5) Cracking With John (HARD)}
 \textbf{Assigned to:} Alex
@@ -162,22 +170,33 @@ Challenges assigned to other teammates are left as blank templates so they can a
 \subsection*{1) Last Signal (EASY)}
 \textbf{Assigned to:} Filippo
 
-\begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
-\end{itemize}
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Inspect the environment and find the suspicious \texttt{LD\_PRELOAD} setting.
+  \item Run commands with \texttt{LD\_PRELOAD} unset to bypass the file-hiding hook.
+  \item Read \texttt{/srv/terminal/.cache/.last\_signal} and recover the flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{82eaf56eecc989b7745605edc744ad18\}}
 
 \subsection*{2) Last Broadcast (EASY)}
 \textbf{Assigned to:} Filippo
 
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Check the environment and notice that \texttt{PATH} points to trojanized binaries in \texttt{/opt/bunker/bin}.
+  \item Bypass the fake tools by using absolute paths such as \texttt{/bin/ls} and \texttt{/bin/cat}.
+  \item Read \texttt{/srv/terminal/.cache/.last\_broadcast} and capture the flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{BUNKER-81071-bjgiap.esvmrvhq.pznmtce\}}
+
+\textbf{Notes}
 \begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
+  \item This challenge demonstrates command hijacking through a malicious \texttt{PATH} configuration.
+  \item Using absolute paths is a simple but effective way to bypass fake wrapper scripts in compromised environments.
 \end{itemize}
+
 
 \subsection*{3) The Living Kernel (MEDIUM)}
 \textbf{Assigned to:} Alex
@@ -205,12 +224,15 @@ Challenges assigned to other teammates are left as blank templates so they can a
 \subsection*{5) Challenge 5 (HARD)}
 \textbf{Assigned to:} Filippo
 
-\begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
-\end{itemize}
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Inspect \texttt{/opt/bunker/scripts/} and identify \texttt{watchdog.sh} and \texttt{spawn\_anomaly.sh}.
+  \item Determine that the watchdog respawns \texttt{anomaly079}, so it must be stopped before the anomaly.
+  \item Recover the final signature from the spawner script.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{survivor\_protocol\_defeated\_079\}}
+
 
 \section{Week 4}
 
@@ -239,22 +261,27 @@ Challenges assigned to other teammates are left as blank templates so they can a
 \subsection*{3) Feed The Machine (MEDIUM)}
 \textbf{Assigned to:} Filippo
 
-\begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
-\end{itemize}
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Log in and decode the \texttt{player\_data} cookie.
+  \item Exploit inconsistent score handling by changing \texttt{score} to a list such as \texttt{[0, 1000000000000]}.
+  \item Send the modified cookie and trigger the win condition to get the flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{WH4T\_1S\_S3SS10N\_C00K13?\}}
 
 \subsection*{4) No Injector Will Pass! (MEDIUM)}
 \textbf{Assigned to:} Filippo
 
-\begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
-\end{itemize}
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Exploit SQL injection in the password reset username field.
+  \item Use a UNION query to extract the victim's reset token from the database.
+  \item Reset the victim password, log in, and retrieve the flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{FLAG\{sql1\_1nj3ct10n\_t0k3n\_th3ft\}}
+
 
 \subsection*{5) Equalizer Weapon (HARD)}
 \textbf{Assigned to:} Alex
@@ -305,12 +332,15 @@ Challenges assigned to other teammates are left as blank templates so they can a
 \subsection*{4) Configuration Drift (MEDIUM)}
 \textbf{Assigned to:} Filippo
 
-\begin{itemize}[leftmargin=*,noitemsep]
-  \item Challenge overview:
-  \item Steps / commands:
-  \item Flag:
-  \item Notes:
-\end{itemize}
+\textbf{Steps}
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item Correlate the provided logs and identify a firewall rule exposing the internal database on port \texttt{3306}.
+  \item Trace the attack from external DB access to stolen VPN credentials and internal movement.
+  \item Decode the Base64 data in the DNS exfiltration query to recover the flag.
+\end{enumerate}
+
+\textbf{Flag:} \texttt{Flag\{30152887ad8ee297\_flag\}}
+
 
 \subsection*{5) ARP Storm (HARD, 20 points)}
 \textbf{Assigned to:} Raman
